@@ -32,13 +32,17 @@ def RUN_APP():
 
 ### ### ### ### ### ### ### ### ### ###
 ### ### ### ### ### ### ### ### ### ###
-if not vinInternet.checkInternetConnection():
-    print("No internet connection found.")
-    vinInternet.waitForInternetConnection()
-    print("Internet connection found.")
+
+def checkInternet():
+    if not vinInternet.checkInternetConnection():
+        print("No internet connection found.")
+        vinInternet.waitForInternetConnection()
+        print("Internet connection found.")
+
 dateTimeW = vinDateTime.getDateTimeWeekday()
 if int(dateTimeW[8:12]) > int(Settings.startAppAfterTime):
     lastDate = vinTextFiles.readFile(Settings.lastDate_filePath)
     if dateTimeW[0:8] != lastDate:
         vinTextFiles.writeFile(Settings.lastDate_filePath, dateTimeW[0:8])
+        checkInternet()
         RUN_APP()
