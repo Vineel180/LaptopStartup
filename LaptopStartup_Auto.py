@@ -18,8 +18,8 @@ def RUN_APP():
     b.openSite_ifMatch(a.MONTHLY_SITES, dateTimeW[6:8])
 
     # quarterly
-    b.openFolder_ifMatch(a.QUARTERLY_FOLDERS, dateTimeW[4:8])
-    b.openSite_ifMatch(a.QUARTERLY_SITES, dateTimeW[4:8])
+    b.openFolder_ifMatch(a.QUARTERLY_FOLDERS, b.toQuarterlyFormat(dateTimeW[4:8]))
+    b.openSite_ifMatch(a.QUARTERLY_SITES, b.toQuarterlyFormat(dateTimeW[4:8]))
 
     #yearly
     b.openSite_ifMatch(a.YEARLY_SITES, dateTimeW[4:8])
