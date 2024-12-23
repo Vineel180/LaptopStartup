@@ -1,8 +1,5 @@
 import vinDateTime
 import vinTextFiles
-import vinInternet
-import vinAppWindows
-import vinTaskManager
 import Settings.Settings as Settings
 import Settings.List as a
 import AppData.LaptopStartup_Main as b
@@ -29,31 +26,17 @@ def RUN_APP():
 
     # daily 2/2
     b.openSites(a.DAILY_SITES)
-    if not vinAppWindows.getWindow_regex("Microsoft Teams", activate=False):
-        vinInternet.sleep(1)
-        vinAppWindows.getWindow_regex("Microsoft Teams", activate=False)
+    b.getMsTeams()
 
 ### ### ### ### ### ### ### ### ### ###
 ### ### ### ### ### ### ### ### ### ###
-def openTickTick():
-    if not vinAppWindows.getWindow("Tick Tick"):
-        if vinTaskManager.isAppRunning("TickTick.exe"):
-            vinTaskManager.stopApp("TickTick.exe")
-            b.openApp(r"start ticktick://")
-        else:
-            b.openApp(r"start ticktick://")
 
-def checkInternet():
-    if not vinInternet.checkInternetConnection():
-        print("No internet connection found.")
-        vinInternet.waitForInternetConnection()
-        print("Internet connection found.")
-
-dateTimeW = vinDateTime.getDateTimeWeekday()
-if int(dateTimeW[8:12]) > int(Settings.startAppAfterTime):
-    lastDate = vinTextFiles.readFile(Settings.lastDate_filePath)
-    if dateTimeW[0:8] != lastDate:
-        vinTextFiles.writeFile(Settings.lastDate_filePath, dateTimeW[0:8])
-        checkInternet()
-        RUN_APP()
-openTickTick()
+if __name__ == "__main__":
+    dateTimeW = vinDateTime.getDateTimeWeekday()
+    if int(dateTimeW[8:12]) > int(Settings.startAppAfterTime):
+        lastDate = vinTextFiles.readFile(Settings.lastDate_filePath)
+        if dateTimeW[0:8] != lastDate:
+            vinTextFiles.writeFile(Settings.lastDate_filePath, dateTimeW[0:8])
+            b.checkInternet()
+            RUN_APP()
+    b.openTickTick()
