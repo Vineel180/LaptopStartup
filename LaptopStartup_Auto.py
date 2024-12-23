@@ -28,7 +28,9 @@ def RUN_APP():
 
     # daily 2/2
     b.openSites(a.DAILY_SITES)
-    vinAppWindows.getWindow("Microsoft Teams")
+    if not vinAppWindows.getWindow_regex("Microsoft Teams", activate=False):
+        vinInternet.sleep(1)
+        vinAppWindows.getWindow_regex("Microsoft Teams", activate=False)
 
 ### ### ### ### ### ### ### ### ### ###
 ### ### ### ### ### ### ### ### ### ###
