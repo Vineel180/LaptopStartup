@@ -2,6 +2,7 @@ import vinDateTime
 import vinTextFiles
 import vinInternet
 import vinAppWindows
+import vinTaskManager
 import Settings.Settings as Settings
 import Settings.List as a
 import AppData.LaptopStartup_Main as b
@@ -34,6 +35,13 @@ def RUN_APP():
 
 ### ### ### ### ### ### ### ### ### ###
 ### ### ### ### ### ### ### ### ### ###
+def openTickTick():
+    if not vinAppWindows.getWindow("Tick Tick"):
+        if vinTaskManager.isAppRunning("TickTick.exe"):
+            vinTaskManager.stopApp("TickTick.exe")
+            b.openApp(r"start ticktick://")
+        else:
+            b.openApp(r"start ticktick://")
 
 def checkInternet():
     if not vinInternet.checkInternetConnection():
@@ -48,3 +56,4 @@ if int(dateTimeW[8:12]) > int(Settings.startAppAfterTime):
         vinTextFiles.writeFile(Settings.lastDate_filePath, dateTimeW[0:8])
         checkInternet()
         RUN_APP()
+openTickTick()
